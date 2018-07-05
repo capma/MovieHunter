@@ -1,0 +1,34 @@
+﻿@using MovieHunter.Models;
+@using TMDbLib.Objects.General;
+
+@model List<Video>
+
+@{
+    Layout = "";
+}
+
+<!-- Modal -->
+<div class="modal-header success">
+    <button type="button" class="close" data-dismiss="modal">
+        <span aria-hidden="true">&times;</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel">Movie trailers</h4>
+</div>
+
+<div class="modal-body">
+
+    <div class="form-horizontal">
+        @foreach (var eachMovie in Model)
+{
+    <iframe width="640" height="380"
+            src="http://www.youtube.com/embed/@eachMovie.Key.ToString()"></iframe>
+}
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" data-dismiss="modal">Back</button>
+</div>
+
+

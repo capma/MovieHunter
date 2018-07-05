@@ -1,0 +1,159 @@
+﻿@using MovieHunter.Models;
+
+@model ListMovies
+
+    @{
+        ViewBag.Title = "Index";
+        Layout = "~/Views/Shared/_MovieHunterLayout.cshtml";
+    }
+
+<script>
+    $(document).ready(function () {
+        $('.thisistrailerofmovie').click(function () {
+            var url = "/Home/Trailer";
+            var id = $(this).attr('data-id'); // the id that's given to each button in the list
+
+            $.get(url + '/' + id, { movieID: id }, function (data) {
+                $('#edit-product-container').html(data);
+                $('#edit-product').modal('show');
+            });
+            
+        });
+    });
+</script>
+
+    <div class="box">
+        <div class="head">
+            <h2>POPULAR</h2>
+            <p class="text-right">
+                <a href="@Url.Action("SeeAll", "Home", new { pType = "seeAllPopular", page = 1 })" class="seeAllPopular">See all</a>
+            </p>
+           
+        </div>
+
+        @foreach (var movie in Model.MoviePopular)
+        {
+            <div class="movie">
+                <div class="movie-image"> 
+                    <a class="thisistrailerofmovie" data-id="@(movie.Id)">
+                        <img src="http://image.tmdb.org/t/p/w185/@movie.PosterPath" alt="" />
+                        <span class="play"><span class="name">@movie.OriginalTitle</span></span>
+                    </a> 
+                </div>
+                <div class="rating">
+                    <p>RATING: @movie.VoteAverage</p>
+                    <span class="comments">YEAR: 
+                        <script>
+                            var d = new Date("@movie.ReleaseDate");
+                            var n = d.getFullYear();
+                            document.write(n);
+                        </script>
+                    </span>
+                </div>
+            </div>
+        }
+        <div class="cl">&nbsp;</div>
+    </div>
+
+    <div class="box">
+        <div class="head">
+            <h2>TOP RATED</h2>
+            <p class="text-right">
+                <a href="@Url.Action("SeeAll", "Home", new { pType = "seeAllTopRated" })" class="seeAllTopRated">See all</a>
+            </p>
+        </div>
+
+        @foreach (var movie in Model.MovieTopRated)
+        {
+            //MovieResult movie = Model.Results.ElementAt(i);
+            <div class="movie">
+                <div class="movie-image"> 
+                    <a class="thisistrailerofmovie" data-id="@(movie.Id)">
+                        <img src="http://image.tmdb.org/t/p/w185/@movie.PosterPath" alt="" />
+                        <span class="play"><span class="name">@movie.OriginalTitle</span></span>
+                    </a> 
+                </div>
+                <div class="rating">
+                    <p>RATING: @movie.VoteAverage</p>
+                    <span class="comments">
+                        YEAR:
+                        <script>
+                            var d = new Date("@movie.ReleaseDate");
+                            var n = d.getFullYear();
+                            document.write(n);
+                        </script>
+                    </span>
+                </div>
+            </div>
+        }
+        <div class="cl">&nbsp;</div>
+    </div>
+
+    <div class="box">
+        <div class="head">
+            <h2>NOW PLAYING</h2>
+            <p class="text-right">
+                <a href="@Url.Action("SeeAll", "Home", new { pType = "seeAllNowPlaying" })" class="seeAllNowPlaying">See all</a>
+            </p>
+        </div>
+
+        @foreach (var movie in Model.MovieNowPlaying)
+        {
+            //MovieResult movie = Model.Results.ElementAt(i);
+            <div class="movie">
+                <div class="movie-image">
+                    <a class="thisistrailerofmovie" data-id="@(movie.Id)">
+                        <img src="http://image.tmdb.org/t/p/w185/@movie.PosterPath" alt="" />
+                        <span class="play"><span class="name">@movie.OriginalTitle</span></span>
+                    </a>
+                </div>
+                    <div class="rating">
+                        <p>RATING: @movie.VoteAverage</p>
+                        <span class="comments">
+                            YEAR:
+                            <script>
+                                var d = new Date("@movie.ReleaseDate");
+                                var n = d.getFullYear();
+                                document.write(n);
+                            </script>
+                        </span>
+                    </div>
+                </div>
+        }
+        <div class="cl">&nbsp;</div>
+    </div>
+
+    <div class="box">
+        <div class="head">
+            <h2>UPCOMPING</h2>
+            <p class="text-right">
+                <a href="@Url.Action("SeeAll", "Home", new { pType = "seeAllUpcoming" })" class="seeAllUpcoming">See all</a>
+            </p>
+        </div>
+
+        @foreach (var movie in Model.MovieUpcoming)
+        {
+            //MovieResult movie = Model.Results.ElementAt(i);
+            <div class="movie">
+                <div class="movie-image"> 
+                    <a class="thisistrailerofmovie" data-id="@(movie.Id)">
+                        <img src="http://image.tmdb.org/t/p/w185/@movie.PosterPath" alt="" />
+                        <span class="play"><span class="name">@movie.OriginalTitle</span></span>
+                    </a> 
+                </div>
+                <div class="rating">
+                    <p>RATING: @movie.VoteAverage</p>
+                    <span class="comments">
+                        YEAR:
+                        <script>
+                            var d = new Date("@movie.ReleaseDate");
+                            var n = d.getFullYear();
+                            document.write(n);
+                        </script>
+                    </span>
+                </div>
+            </div>
+        }
+        <div class="cl">&nbsp;</div>
+    </div>
+

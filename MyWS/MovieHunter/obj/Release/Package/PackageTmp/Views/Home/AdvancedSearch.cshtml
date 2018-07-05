@@ -1,0 +1,50 @@
+﻿@using TMDbLib.Objects.General;
+
+@model MovieHunter.Models.AdvancedSearch
+
+@{
+    ViewBag.Title = "Advanced search";
+    Layout = "~/Views/Shared/_MovieHunterLayout.cshtml";
+}
+
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/css/style.css" rel="stylesheet" />
+<link href="~/Content/bootstrap_min_select.css" rel="stylesheet" />
+@*<link href="~/Content/bootstrap-select.css" rel="stylesheet" />*@
+
+<script src="~/Scripts/jquery.twbsPagination.js"></script>
+
+<div class="box">
+    
+    <div class="head">
+        <h2>DISCOVER</h2>
+        <div class="cl">&nbsp;</div>
+    </div>
+    @using (Html.BeginForm("AdvancedSearchResult", "Home", FormMethod.Get, htmlAttributes: new { @class = "form-inline" }))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.year, htmlAttributes: new { @class = "label-danger" })
+            @Html.DropDownList("year", null, new { @class = "selectpicker" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.sortBy, htmlAttributes: new { @class = "label-danger" })
+            @Html.DropDownList("SortBy", null, new { @class = "selectpicker" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Genres, htmlAttributes: new { @class = "label-danger" })
+            @Html.DropDownList("GenreIDs", (SelectList)ViewBag.Genres, new { @class = "selectpicker", multiple = "multiple" })
+        </div>
+
+        <div class="form-group">
+            <div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    }
+</div>
+           
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/bootstrap-select.js"></script>
+

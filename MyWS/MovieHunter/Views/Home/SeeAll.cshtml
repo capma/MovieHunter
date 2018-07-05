@@ -1,0 +1,79 @@
+﻿@using MovieHunter.Models;
+@using TMDbLib.Objects.General;
+
+@model AllMovies
+
+@{
+    ViewBag.Title = "All " + Model.currentMovieTypeName;
+    Layout = "~/Views/Shared/_MovieHunterLayout.cshtml";
+}
+
+@*<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
+<link href="~/Content/css/style.css" rel="stylesheet" />
+@*<link href="~/Content/bootstrap_min_select.css" rel="stylesheet" />*@
+
+<script src="~/Scripts/jquery.twbsPagination.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#pagination-top, #pagination-bottom').twbsPagination({
+            totalPages: '@Model.totalPages',
+            visiblePages: "10",
+            href: '?pType=@Model.currentMovieType&page={{number}}',
+            onPageClick: function (event, page) {
+                $('#page-content').text('Page ' + page);
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('.thisistrailerofmovie').click(function () {
+            var url = "/Home/Trailer";
+            var id = $(this).attr('data-id'); // the id that's given to each button in the list
+
+            $.get(url + '/' + id, { movieID: id }, function (data) {
+                $('#edit-product-container').html(data);
+                $('#edit-product').modal('show');
+            });
+
+        });
+    });
+</script>
+
+<div class="box">
+    <div class="head">
+        <h2>All @Model.currentMovieTypeName Movies</h2>
+        <div class="cl">&nbsp;</div>
+        <p class="text-left"><ul id="pagination-top" class="pagination"></ul></p>
+    </div>   
+
+    @foreach (var movie in Model.currentAllMovies)
+    {
+        //MovieResult movie = Model.Results.ElementAt(i);
+        <div class="movie">
+            <div class="movie-image"> 
+                <a class="thisistrailerofmovie" data-id="@(movie.Id)">
+                    <img src="http://image.tmdb.org/t/p/w154/@movie.PosterPath" alt="" />
+                    <span class="play"><span class="name">@movie.OriginalTitle</span></span>
+                </a> 
+            </div>
+            <div class="rating">
+                <p>RATING: @movie.VoteAverage</p>
+                <span class="comments">
+                    YEAR:
+                    <script>
+                            var d = new Date("@movie.ReleaseDate");
+                            var n = d.getFullYear();
+                            document.write(n);
+                    </script>
+                </span>
+            </div>
+        </div>
+    }
+    <div class="cl">&nbsp;</div>
+</div>
+
+<ul id="pagination-bottom" class="pagination"></ul>
+

@@ -1,0 +1,12 @@
+﻿@using MovieHunter.Models;
+
+@{
+    Layout = "";
+}
+
+@using (Html.BeginForm("Search", "Home", new { page = 1 }, FormMethod.Get, htmlAttributes: new { @role = "form" }))
+{
+    <label for="search-field">SEARCH</label>
+    <input type="text" name="textToSearch" placeholder="Enter search here" id="search-field" class="blink search-field" />
+    <input type="submit" value="GO!" class="search-button" />
+}

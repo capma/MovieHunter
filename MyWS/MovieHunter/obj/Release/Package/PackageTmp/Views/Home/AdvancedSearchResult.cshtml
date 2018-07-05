@@ -1,0 +1,122 @@
+﻿@model MovieHunter.Models.AdvancedSearch
+
+@{
+    ViewBag.Title = "AdvancedSearchResult";
+    Layout = "~/Views/Shared/_MovieHunterLayout.cshtml";
+}
+
+@*<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-select.css" rel="stylesheet" />
+<link href="~/Content/css/style.css" rel="stylesheet" />*@
+
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/css/style.css" rel="stylesheet" />
+<link href="~/Content/bootstrap_min_select.css" rel="stylesheet" />
+
+
+<script src="~/Scripts/jquery.twbsPagination.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var concatGenreID = '';
+        var myArray = [];
+
+        @foreach (var d in Model.genresSave)
+        {
+            @:myArray.push("@d");
+        }
+
+        $.each(myArray, function (i, val) {
+            concatGenreID = concatGenreID + "&GenreIDs=" + val;
+        });
+
+        $('#pagination-top, #pagination-bottom').twbsPagination({
+            totalPages: '@Model.totalPages',
+            visiblePages: "5",
+            href: '?year=@Model.yearSave&SortBy=@Model.sortBySave&page={{number}}' + concatGenreID,
+            onPageClick: function (event, page) {
+                $('#page-content').text('Page ' + page);
+            }
+        });
+    });
+
+    $('.selectpicker').selectpicker();
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('.thisistrailerofmovie').click(function () {
+            var url = "/Home/Trailer";
+            var id = $(this).attr('data-id'); // the id that's given to each button in the list
+
+            $.get(url + '/' + id, { movieID: id }, function (data) {
+                $('#edit-product-container').html(data);
+                $('#edit-product').modal('show');
+            });
+
+        });
+    });
+</script>
+<P>
+    <h2>DISCOVER RESULT</h2>
+</P>
+    
+<div class="head">
+    @using (Html.BeginForm("AdvancedSearchResult", "Home", FormMethod.Get, htmlAttributes: new { @class = "form-inline" }))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.year, htmlAttributes: new { @class = "label-danger" })
+            @Html.DropDownList("year", null, new { @class = "selectpicker" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.sortBy, htmlAttributes: new { @class = "label-danger" })
+            @Html.DropDownList("SortBy", null, new { @class = "selectpicker" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Genres, htmlAttributes: new { @class = "label-danger" })
+            @Html.DropDownList("GenreIDs", (SelectList)ViewBag.Genres, new { @class = "selectpicker", multiple = "multiple" })
+        </div>
+
+        <div class="form-group">
+            <div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    }
+    <div class="cl">&nbsp;</div>
+    <ul id="pagination-top" class="pagination"></ul>
+</div>
+
+<div class="box">
+
+    @foreach (var movie in Model.movieSearchResult)
+    {
+        <div class="movie">
+            <div class="movie-image">
+                <a class="thisistrailerofmovie" data-id="@(movie.Id)">
+                    <img src="http://image.tmdb.org/t/p/w154/@movie.PosterPath" alt="" />
+                    <span class="play"><span class="name">@movie.OriginalTitle</span></span>
+                </a>
+            </div>
+            <div class="rating">
+                <p>RATING: @movie.VoteAverage</p>
+                <span class="comments">
+                    YEAR:
+                    <script>
+                        var d = new Date("@movie.ReleaseDate");
+                        var n = d.getFullYear();
+                        document.write(n);
+                    </script>
+                </span>
+            </div>
+        </div>
+    }
+    <div class="cl">&nbsp;</div>
+</div>
+
+<ul id="pagination-bottom" class="pagination"></ul>
+
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/bootstrap-select.js"></script>

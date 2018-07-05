@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Movie Hunter - @ViewBag.Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="~/Content/css/style.css" type="text/css" media="all" />
+    <script type="text/javascript" src="~/Scripts/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/js/jquery-func.js"></script>
+    <link href="~/Content/bootstrap-select.min.css" rel="stylesheet" />
+    
+    <!--[if IE 6]><link rel="stylesheet" href="css/ie6.css" type="text/css" media="all" /><![endif]-->
+</head>
+<body>
+    
+    <!-- START PAGE SOURCE -->
+    <div id="shell">
+        <div id="header">
+            <h1 id="logo"><a href="#">MovieHunter</a></h1>
+            <div class="social">
+                <span>FOLLOW US ON:</span>
+                <ul>
+                    <li><a class="twitter" href="#">twitter</a></li>
+                    <li><a class="facebook" href="#">facebook</a></li>
+                    <li><a class="vimeo" href="#">vimeo</a></li>
+                    <li><a class="rss" href="#">rss</a></li>
+                </ul>
+            </div>
+            <div id="navigation">
+                <ul>
+                    <li><a href="#">HOME</a></li>
+                    <li><a href="#">PEOPLE</a></li>
+                    <li><a href="#">REVIEWS</a></li>
+                    <li><a href="#">CONTACT</a></li>
+                    <li>@Html.ActionLink("DISCOVER", "AdvancedSearch", "Home")</li>
+                </ul>
+            </div>
+            <div id="sub-navigation">
+                <ul>
+                    <li>@Html.ActionLink("POPULAR", "SeeAll", "Home", new { pType = "seeAllPopular", page = 1 }, null)</li>
+                    <li>@Html.ActionLink("TOP RATED", "SeeAll", "Home", new { pType = "seeAllTopRated", page = 1 }, null)</li>
+                    <li>@Html.ActionLink("UPCOMING", "SeeAll", "Home", new { pType = "seeAllUpcoming", page = 1 }, null)</li>
+                    <li>@Html.ActionLink("NOW PLAYING", "SeeAll", "Home", new { pType = "seeAllNowPlaying", page = 1 }, null)</li>
+                    <li>@Html.ActionLink("LATEST", "Index", "Home", new { @class = "active" })</li>
+                </ul>
+                <div id="search">
+                    @using (Html.BeginForm("Search", "Home", FormMethod.Post, htmlAttributes: new { @role = "form" }))
+                    {
+                        <label for="search-field">SEARCH</label>
+                        <input type="text" name="textToSearch" placeholder="Enter movie's name here" id="search-field" class="blink search-field" />
+                        <input type="submit" value="GO!" class="search-button" />
+                    }
+                </div>
+            </div>
+        </div>
+        <div id="main">
+            <div id="content">
+
+                @RenderBody()
+
+            </div>
+        </div>
+        <div id="footer">
+            <p class="lf">Copyright &copy; 2016 <a href="#">Movie Hunter</a> - All Rights Reserved</p>
+            <p class="rf">Designed by Tri Pham</p>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="edit-product" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" id="edit-product-container">
+            </div>
+        </div>
+    </div>
+
+    <!-- END PAGE SOURCE -->
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", false)
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-select.min.js"></script>
+
+</body>
+</html>
